@@ -22,10 +22,11 @@ const NavItems = styled.div`
 `
 const NavButton = styled.button`
   margin-left: 20px;
-  border: none;
-  padding: 5px 10px;
+  border: 1px #003580;
+  padding: 10px 20px;
   cursor: pointer;
   color: #003580;
+  font-weight: 500px;
 `
 
 
@@ -36,7 +37,7 @@ function Navbar() {
         <Logo>arraybooking</Logo>
         <NavItems>
           <NavButton>Register</NavButton>
-          <NavButton>Login</NavButton>
+          <NavButton>Sign in</NavButton>
         </NavItems>
       </NavContainer>
     </NavBar>
