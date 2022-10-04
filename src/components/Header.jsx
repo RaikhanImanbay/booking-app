@@ -13,6 +13,7 @@ import { useState } from "react";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 const HeaderContainer = styled.div`
   background-color: #003580;
@@ -124,8 +125,8 @@ const OptionCounterButton = styled.button`
 const OptionCounterNumber = styled.span``;
 
 function Header({ type }) {
+  const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
-
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -141,6 +142,8 @@ function Header({ type }) {
     room: 1,
   });
 
+  const navigate = useNavigate();
+
   const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
@@ -149,6 +152,10 @@ function Header({ type }) {
       };
     });
   };
+
+  const handleSearch = () => {
+    navigate("/hotels", {state:{destination, date, options}})
+  }
 
   return (
     <HeaderContainer>
@@ -191,7 +198,7 @@ function Header({ type }) {
                 <HeaderSeachInput
                   type="text"
                   placeholder="Where are you going?"
-                />
+                onChange={e=>setDestination(e.target.value)}/>
               </HeaderSearchItem>
               <HeaderSearchItem>
                 <HeaderIcon>
@@ -210,6 +217,7 @@ function Header({ type }) {
                       onChange={(item) => setDate([item.selection])}
                       moveRangeOnFirstSelection={false}
                       ranges={date}
+                      minDate={new Date()}
                     />
                   )}
                 </DateInfo>
@@ -284,7 +292,7 @@ function Header({ type }) {
                 )}
               </HeaderSearchItem>
               <HeaderSearchItem>
-                <HeaderButton>Search</HeaderButton>
+                <HeaderButton onClick={handleSearch}>Search</HeaderButton>
               </HeaderSearchItem>
             </HeaderSearch>
           </>
